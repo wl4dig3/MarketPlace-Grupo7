@@ -18,7 +18,7 @@ const ProfilePage = () => {
       <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Phone Number:</strong> {user.phone_number}</p>
       <p><strong>Date of Birth:</strong> {user.date_of_birth}</p>
-      <button onClick={logout} className="btn btn-danger">Logout</button>
+      <button onClick={logout} className="btn btn-sucess">Logout</button>
     </div>
   );
 };
