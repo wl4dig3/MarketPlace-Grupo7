@@ -3,7 +3,7 @@ import Register from './Register';
 import Login from './Login';
 
 const HomePage = () => {
-  const [formType, setFormType] = useState('none'); 
+  const [formType, setFormType] = useState('none');
 
   const handleShowForm = (formType) => {
     setFormType(formType);
