@@ -10,16 +10,16 @@ const HomePage = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h1>Prueba de ecommerce</h1>
-      <div className="btn-group">
+    <div className="container h-[90%] mt-4 flex flex-col justify-center">
+
+      <div className="btn-group ">
         <button className="btn btn-primary" onClick={() => handleShowForm('register')}>Register</button>
         <button className="btn btn-secondary" onClick={() => handleShowForm('login')}>Login</button>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 ">
         {formType === 'register' && <Register />}
         {formType === 'login' && <Login />}
-        {formType === 'none' && <p>Selecciona una opción</p>}
+       {formType === 'none' && <p>Selecciona una opción</p>} 
       </div>
     </div>
   );

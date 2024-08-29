@@ -20,10 +20,13 @@ const Login = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputField type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+    <Form onSubmit={handleSubmit}  >
+      <InputField  type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <InputField type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit" className="btn btn-primary">Login</button>
+      <button
+              type="submit"
+              className="w-full rounded-full  bg-red-600 p-3 text-white transition hover:bg-opacity-90"
+            >Iniciar Sesion</button>
       {error && <p className="text-danger">{error}</p>}
     </Form>
   );

@@ -23,13 +23,18 @@ const Register = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="">
       <InputField type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
       <InputField type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <InputField type="text" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
       <InputField type="text" placeholder="Date of Birth (dd/mm/yyyy)" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
       <InputField type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit" className="btn btn-primary">Register</button>
+      <button
+              type="submit"
+              className="w-full rounded-full  bg-red-600 p-3 text-white transition hover:bg-opacity-90"
+            >
+              Resgistrate
+            </button>
       {error && <p className="text-danger">{error}</p>}
     </Form>
   );

@@ -4,8 +4,8 @@ const Form = ({ onSubmit, children }) => {
   return (
     <form 
       onSubmit={onSubmit} 
-      className="p-4 border rounded shadow-sm bg-light mx-auto" 
-      style={{ maxWidth: '400px' }}
+      className="p-4 mx-auto max-w-[400]  flex flex-col justify-around gap-3" 
+      
     >
       {children}
     </form>
