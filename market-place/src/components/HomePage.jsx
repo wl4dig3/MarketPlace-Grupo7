@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Register from './Register';
 import Login from './Login';
+import Form from './Form';
 
 const HomePage = () => {
   const [formType, setFormType] = useState('none');
@@ -21,6 +22,7 @@ const HomePage = () => {
         {formType === 'login' && <Login />}
        {formType === 'none' && <p>Selecciona una opción</p>} 
       </div>
+      <Form/>
     </div>
   );
 };
