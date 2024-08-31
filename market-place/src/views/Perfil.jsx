@@ -6,7 +6,7 @@ import MisPublicaciones from "../components/MisPublicaciones";
 
 const Perfil = () => {
   return (
-    <div className="flex flex-col justify-around">
+    <div className="flex flex-col justify-around bg-yellow">
       {/* Barra de navegación superior */}
       <nav className="bg-white py-4 shadow-md">
         <div className="container mx-auto px-4">
@@ -103,9 +103,12 @@ const Perfil = () => {
             </form>
           </section>
         </div>
-        <section className="flex flex-wrap justify-center gap-4">
-          <MisPublicaciones />
-          <MisPublicaciones />
+        <section className="p-4">
+          <h2>Mis Publicaciones</h2>
+          <article className="flex flex-wrap justify-start gap-4">
+            <MisPublicaciones />
+            <MisPublicaciones />
+          </article>
         </section>
       </main>
 
