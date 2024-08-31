@@ -88,7 +88,7 @@ const Perfil = () => {
             </form>
           </section>
         </div>
-        <section className="p-4">
+        <section className="p-4 mb-5">
           <h2>Mis Publicaciones</h2>
           <article className="flex flex-wrap justify-start gap-4">
             <MisPublicaciones />
