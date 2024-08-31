@@ -8,19 +8,19 @@ export const AuthProvider = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  const register = (userData) => {
+  const register = async (userData) => {
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
 
-  const login = (email, password) => {
+  const login = async (email, password) => {
     return new Promise((resolve, reject) => {
       const storedUser = JSON.parse(localStorage.getItem('user'));
       if (storedUser && storedUser.email === email && storedUser.password === password) {
         setUser(storedUser);
         resolve();
       } else {
-        reject(new Error('Invalid credentials'));
+        reject(new Error('Credenciales inválidas'));
       }
     });
   };

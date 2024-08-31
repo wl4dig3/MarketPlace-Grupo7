@@ -18,21 +18,21 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    if (!email || !password ) {
-     alert('Todos los campos son requeridos.');
-     return;
+    if (!email || !password) {
+      alert('Todos los campos son requeridos.');
+      return;
     }
     if (!validateEmail(email)) {
       setError('Invalid email format.');
       return;
     }
-    navigate('/productos');
-     try {
-       login(email, password);
-       setError(''); 
-     } catch (err) {
-       setError(alert('Login fallido. Por favor verifica tus credenciales e intenta de nuevo.'));
-   }
+    try {
+      await login(email, password); 
+      navigate('/productos');
+      setError('');
+    } catch (err) {
+      setError('Login fallido. Por favor verifica tus credenciales e intenta de nuevo.');
+    }
   };
 
   return (
