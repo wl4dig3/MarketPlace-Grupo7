@@ -34,7 +34,6 @@ const Login = () => {
       setError('Login fallido. Por favor verifica tus credenciales e intenta de nuevo.');
     }
   };
-  
 
   return (
     <Form onSubmit={handleLogin}  >

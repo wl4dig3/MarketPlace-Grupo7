@@ -44,17 +44,18 @@ const Register = () => {
       return;
     }
     if (!validateDateOfBirth(dateOfBirth)) {
-      setError('Formato de fecha de nacimiento inválido. Use dd/mm/yyyy.');
+      setError('Formato de fecha de nacimiento inválido. Usa dd/mm/yyyy.');
       return;
     }
     try {
       await register({ username, email, phone_number: phoneNumber, date_of_birth: dateOfBirth, password });
-      setError('');
       navigate('/productos');
+      setError('');
     } catch (err) {
       setError('El registro falló. Por favor, inténtelo de nuevo.');
     }
   };
+  
 
   return (
     <Form onSubmit={handleSubmit} className="">
