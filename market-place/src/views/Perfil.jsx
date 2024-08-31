@@ -1,7 +1,7 @@
 import React from "react";
 import ProfilePage from "../components/ProfilePage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faCoffee, faUser, faEnvelope, faPhone, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import MisPublicaciones from "../components/MisPublicaciones";
 
 const Perfil = () => {
@@ -46,8 +46,8 @@ const Perfil = () => {
       <main className="container mx-auto p-4 mt-4">
         <div className="flex flex-row justify-around">
           <p className="text-lg font-bold mb-2">Mis publicaciones</p>
-          <p className="text-lg font-bold mb-2">Fvorito</p>
-          <p className="text-lg font-bold mb-2">Icono carrito</p>
+          <p className="text-lg font-bold mb-2">Favorito</p>
+          <FontAwesomeIcon icon={faCartShopping} />
         </div>
         <div className="flex flex-row">
           <section className="bg-white p-4 mb-4 w-full md:w-1/2">
@@ -58,13 +58,8 @@ const Perfil = () => {
             {/* Contenido del formulario */}
 
             <form>
-              <div className="mb-4">
-                <label
-                  htmlFor="nombre"
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                >
-                  Nombre:
-                </label>
+              <div className="mb-4 flex flex-row">
+                <FontAwesomeIcon icon={faUser} className="mt-3 mr-2"/>
                 <input
                   type="text"
                   id="nombre"
@@ -72,13 +67,8 @@ const Perfil = () => {
                   placeholder="Ingrese su nombre"
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                >
-                  Email:
-                </label>
+              <div className="mb-4 flex flex-row">
+              <FontAwesomeIcon icon={faEnvelope} className="mt-3 mr-2"/>
                 <input
                   type="email"
                   id="email"
@@ -86,13 +76,8 @@ const Perfil = () => {
                   placeholder="Ingrese su email"
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="telefono"
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                >
-                  Teléfono:
-                </label>
+              <div className="mb-4 flex flex-row">
+              <FontAwesomeIcon icon={faPhone} className="mt-3 mr-2"/>
                 <input
                   type="tel"
                   id="telefono"
@@ -114,10 +99,7 @@ const Perfil = () => {
 
       {/* Footer */}
       <footer className="bg-gray-200 p-4 text-center text-sm text-gray-700 fixed bottom-0 left-0 right-0">
-        <FontAwesomeIcon icon="edit" />
-        <FontAwesomeIcon icon="trash-alt" />
-        <FontAwesomeIcon icon={["fab", "facebook-f"]} />
-        <p>&copy; 2023 Mi sitio web </p>
+        <p>&copy; 2023 Mi sitio web  Desafio Market </p>
       </footer>
     </div>
   );
