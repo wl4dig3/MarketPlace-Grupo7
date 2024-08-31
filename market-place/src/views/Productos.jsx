@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ProductsContext } from '../context/ProductsContext';
 import ProductItem from '../components/ProductItem';
 
-const Products = () => {
+const Productos = () => {
     const { products, error } = useContext(ProductsContext);
 
     if (error) {
@@ -57,4 +57,4 @@ const Products = () => {
     );
 };
 
-export default Products;
+export default Productos;
