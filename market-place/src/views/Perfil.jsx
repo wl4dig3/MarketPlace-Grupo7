@@ -19,7 +19,7 @@ const Perfil = () => {
                 <input
                   type="text"
                   className="form-control block w-full py-2 pl-10 text-sm text-gray-700"
-                  placeholder="Buscar"
+                  placeholder=" Buscar"
                 />
                 <span className="input-group-addon absolute left-0 top-0 mt-2 ml-2">
                   <i className="fa fa-search text-gray-500" />
