@@ -51,7 +51,7 @@ const Perfil = () => {
           </section>
         </div>
         <section className="p-4 mb-5">
-          <h2>Mis Publicaciones</h2>
+          <h2 className="mb-5 text-2xl">Mis Publicaciones</h2>
           <article className="flex flex-wrap justify-start gap-4">
             <MisPublicaciones />
             <MisPublicaciones />
