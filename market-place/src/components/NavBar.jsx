@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({ onFavoriteClick }) => {
   return (
     <div className="container bg-NavColor mx-auto px-4  shadow-md h-32">
       <div className="flex justify-between items-center ">
@@ -25,7 +25,7 @@ const NavBar = () => {
               <Link to={"/Perfil"}>
               <p className="text-lg font-poppins mb-2">Mis publicaciones</p>
               </Link>
-              <p className="text-lg font-poppins mb-2">Favorito</p>
+              <p className="text-lg font-poppins mb-2 cursor-pointer" onClick={onFavoriteClick}>Favorito</p>
             </div>  
         </div>
         <div className="flex flex-col gap-5 items-center">

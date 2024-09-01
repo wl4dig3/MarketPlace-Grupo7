@@ -1,12 +1,23 @@
 import React, { useContext, useState } from "react";
 import { ProductsContext } from "../context/ProductsContext";
+import { useEffect } from "react";
 import ProductItem from "../components/ProductItem";
 import Filter from "../components/Filter";
 import NavBar from "../components/NavBar";
+import FavoriteSidebar from '../components/FavoriteSidebar';
+
+
 
 const Productos = () => {
   const { products, error } = useContext(ProductsContext);
   const [sortOrder, setSortOrder] = useState("default");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavorites(storedFavorites);
+  }, []);
 
   if (error) {
     return <p className="text-red-500">Error: {error}</p>;
@@ -16,6 +27,22 @@ const Productos = () => {
     setSortOrder(order);
   };
 
+ const handleFavoriteClick = () => {
+    setIsSidebarOpen(true);
+  };
+
+  const handleCloseSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+const handleToggleFavorite = (product) => {
+    const updatedFavorites = favorites.some(fav => fav.id === product.id)
+      ? favorites.filter(fav => fav.id !== product.id)
+      : [...favorites, product];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
   const sortedProducts = [...products].sort((a, b) => {
     if (sortOrder === "asc") {
       return a.price - b.price;
@@ -32,8 +59,9 @@ const Productos = () => {
 
   return (
     <div className="container mx-auto px-4 bg-customColor">
+       <NavBar onFavoriteClick={handleFavoriteClick} />
+       <FavoriteSidebar isOpen={isSidebarOpen} onClose={handleCloseSidebar} favorites={favorites} onToggleFavorite={handleToggleFavorite}/>
       <section className="mb-8">
-        <NavBar />
         <div className="mt-5 mb-5 flex justify-between">
           <h2 className="text-2xl mb-4 font-poppins font-medium">Novedades</h2>
           <Filter onSortChange={handleSortChange} />
@@ -41,7 +69,8 @@ const Productos = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {latestProducts.length > 0 ? (
             latestProducts.map((product) => (
-              <ProductItem key={product.id} product={product} />
+              <ProductItem key={product.id} product={product}
+              onToggleFavorite={handleToggleFavorite} />
             ))
           ) : (
             <p>No hay novedades disponibles.</p>
@@ -52,7 +81,7 @@ const Productos = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4  p-4">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (
-            <ProductItem key={product.id} product={product} />
+            <ProductItem key={product.id} product={product} onToggleFavorite={handleToggleFavorite} />
           ))
         ) : (
           <p>No hay productos disponibles.</p>

@@ -2,27 +2,25 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-const ProductItem = ({ product }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
 
-    useEffect(() => {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        setIsFavorite(favorites.some(fav => fav.id === product.id));
-      }, [product.id]);
-    
-      const handleFavoriteClick = () => {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-        let updatedFavorites;
-    
-        if (isFavorite) {
-          updatedFavorites = favorites.filter(fav => fav.id !== product.id);
-        } else {
-          updatedFavorites = [...favorites, product];
-        }
-    
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-        setIsFavorite(!isFavorite);
-      };
+
+const ProductItem = ({ product, onToggleFavorite }) => {
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setIsFavorite(favorites.some(fav => fav.id === product.id));
+  }, [product.id]);
+
+  const handleFavoriteClick = () => {
+    if (typeof onToggleFavorite === 'function') {
+      onToggleFavorite(product);
+      setIsFavorite(!isFavorite);
+    } else {
+      console.error('onToggleFavorite is not a function');
+    }
+  };
   return (
     
     <div className=" bg-cardColor border border-gray-300 rounded-lg shadow-md my-3 p-4">
