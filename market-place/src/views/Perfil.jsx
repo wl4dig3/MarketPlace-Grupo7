@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faPhone} from "@fortawesome/free-solid-svg-icons";
 import MisPublicaciones from "../components/MisPublicaciones";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const Perfil = () => {
   return (
@@ -59,10 +60,8 @@ const Perfil = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-200 p-4 text-center text-sm text-gray-700 fixed bottom-0 left-0 right-0">
-        <p>&copy; 2023 Mi sitio web  Desafio Market </p>
-      </footer>
+      <Footer />
+      
     </div>
   );
 };

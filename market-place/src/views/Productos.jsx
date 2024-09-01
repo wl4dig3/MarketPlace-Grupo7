@@ -6,6 +6,7 @@ import Filter from "../components/Filter";
 import NavBar from "../components/NavBar";
 import FavoriteSidebar from '../components/FavoriteSidebar';
 import ProductDetailSidebar from '../components/ProductDetailSideBar';
+import Footer from "../components/Footer";
 
 
 const Productos = () => {
@@ -102,6 +103,7 @@ const handleToggleFavorite = (product) => {
           <p>No hay productos disponibles.</p>
         )}
       </div>
+      <Footer />  
     </div>
   );
 };
