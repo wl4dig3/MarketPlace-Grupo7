@@ -5,7 +5,7 @@ import ProductItem from "../components/ProductItem";
 import Filter from "../components/Filter";
 import NavBar from "../components/NavBar";
 import FavoriteSidebar from '../components/FavoriteSidebar';
-
+import ProductDetailSidebar from '../components/ProductDetailSideBar';
 
 
 const Productos = () => {
@@ -13,6 +13,9 @@ const Productos = () => {
   const [sortOrder, setSortOrder] = useState("default");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [isDetailSidebarOpen, setIsDetailSidebarOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -33,6 +36,16 @@ const Productos = () => {
 
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
+  };
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setIsDetailSidebarOpen(true);
+  };
+
+  const handleCloseDetailSidebar = () => {
+    setIsDetailSidebarOpen(false);
+    setSelectedProduct(null);
   };
 
 const handleToggleFavorite = (product) => {
@@ -61,6 +74,7 @@ const handleToggleFavorite = (product) => {
     <div className="container mx-auto px-4 bg-customColor">
        <NavBar onFavoriteClick={handleFavoriteClick} />
        <FavoriteSidebar isOpen={isSidebarOpen} onClose={handleCloseSidebar} favorites={favorites} onToggleFavorite={handleToggleFavorite}/>
+       <ProductDetailSidebar isOpen={isDetailSidebarOpen} onClose={handleCloseDetailSidebar} product={selectedProduct} />
       <section className="mb-8">
         <div className="mt-5 mb-5 flex justify-between">
           <h2 className="text-2xl mb-4 font-poppins font-medium">Novedades</h2>
@@ -70,7 +84,7 @@ const handleToggleFavorite = (product) => {
           {latestProducts.length > 0 ? (
             latestProducts.map((product) => (
               <ProductItem key={product.id} product={product}
-              onToggleFavorite={handleToggleFavorite} />
+              onToggleFavorite={handleToggleFavorite} onClick={() => handleProductClick(product)} />
             ))
           ) : (
             <p>No hay novedades disponibles.</p>
@@ -81,7 +95,8 @@ const handleToggleFavorite = (product) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4  p-4">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (
-            <ProductItem key={product.id} product={product} onToggleFavorite={handleToggleFavorite} />
+            <ProductItem key={product.id} product={product}
+             onToggleFavorite={handleToggleFavorite} onClick={() => handleProductClick(product)}/>
           ))
         ) : (
           <p>No hay productos disponibles.</p>

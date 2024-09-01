@@ -4,7 +4,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
 
-const ProductItem = ({ product, onToggleFavorite }) => {
+const ProductItem = ({ product, onToggleFavorite,onClick }) => {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -23,14 +23,14 @@ const ProductItem = ({ product, onToggleFavorite }) => {
   };
   return (
     
-    <div className=" bg-cardColor border border-gray-300 rounded-lg shadow-md my-3 p-4">
+    <div className=" bg-cardColor border border-gray-300 rounded-lg shadow-md my-3 p-4 ">
       <img
-        className="w-full h-48 object-cover rounded-t-lg"
+        className="w-full h-48 object-cover rounded-t-lg cursor-pointer" onClick={onClick}
         src={product.image}
         alt={product.name}
       />
       <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+        <h3 className="text-xl font-semibold mb-2 cursor-pointer" onClick={onClick}>{product.name}</h3>
         <p className="text-gray-700 mb-2">{product.description}</p>
         <p className="text-gray-600 mb-2">
           <strong>Category:</strong> {product.category}
