@@ -1,5 +1,5 @@
 import React from "react";
-import ProfilePage from "../components/ProfilePage";
+// import ProfilePage from "../components/ProfilePage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faPhone} from "@fortawesome/free-solid-svg-icons";
 import MisPublicaciones from "../components/MisPublicaciones";
