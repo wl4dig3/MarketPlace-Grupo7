@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    fontFamily: {
+    extend: {
+      colors: {
+        customColor: '#FCF2E7',
+        cardColor:"#AFA8A0",
+        NavColor:"#E3E1E3",
+      },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },

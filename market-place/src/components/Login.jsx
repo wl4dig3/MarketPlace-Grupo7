@@ -26,9 +26,9 @@ const Login = () => {
       setError('Invalid email format.');
       return;
     }
+    navigate('/productos');
     try {
       await login(email, password); 
-      navigate('/productos');
       setError('');
     } catch (err) {
       setError('Login fallido. Por favor verifica tus credenciales e intenta de nuevo.');
