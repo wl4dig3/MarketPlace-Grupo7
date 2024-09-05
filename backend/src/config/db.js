@@ -1,23 +1,24 @@
 import pg from 'pg';
 import 'dotenv/config'
-
 const { Pool } = pg;
 
-const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-});
+const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
 
-async function testConnection() {
-    try {
-        const result = await pool.query('SELECT NOW()');
-        console.log('Database connected:', result.rows[0]);
-    } catch (error) {
-        console.error('Database connection error:', error);
-    }
+const config = {
+    host: DB_HOST,
+    port: DB_PORT,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_DATABASE,
+    allowExitOnIdle: true
 }
+const pool = new Pool(config);
 
-testConnection();
+try {
+    await pool.query('SELECT NOW()');
+    console.log('Database connected');
+  } catch (error) {
+    console.log(error);
+  }
+
+export default pool
