@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { createUser, findUserByEmail} from '../model/userModel.js';
+import { createUser, getUserByEmail } from '../model/userModel.js';
 
+const JWT_SECRET = 'market-key'; 
 export const createUserController = async (req, res) => {
   const { username, email, phone_number, date_of_birth, password } = req.body;
 
@@ -11,66 +12,66 @@ export const createUserController = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const result = await createUser({
-        username,
-        email,
-        phone_number,
-        date_of_birth,
-        password: hashedPassword
-      });
+      username,
+      email,
+      phone_number,
+      date_of_birth,
+      password: hashedPassword
+    });
 
-      return res.status(201).json({
-        id: result.id,
-        username: result.username,
-        email: result.email,
-        phone_number: result.phone_number
-      });
-    } catch (error) {
-      return res.status(500).json({ message: 'Error creando el usuario' });
+    return res.status(201).json({
+      id: result.data.id,
+      username: result.data.username,
+      email: result.data.email,
+      phone_number: result.data.phone_number
+    });
+  } catch (error) {
+    console.error('Error creando el usuario:', error);
+    return res.status(500).json({ message: 'Error creando el usuario' });
+  }
+};
+
+export const loginUserController = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Datos invalidos' });
+  }
+
+  try {
+    const result = await getUserByEmail(email);
+    if (!result) {
+      return res.status(401).json({ message: 'Credenciales invalidas' });
     }
-  };
 
-  //Controlador login ususuario
-  export const loginUserController = async (req, res) => {
-    const { email, password } = req.body;
-  
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Invalido' });
+    const user = result;
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Credenciales invalidas' });
     }
-  
-    try {
-      const result = await findUserByEmail(email);
-      if (!result.success) {
-        return res.status(401).json({ message: 'Credenciales invalidas' });
-      }
-  
-      const user = result.data;
-  
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(401).json({ message: 'Credenciales invalidas' });
-      }
 
-      const token = jwt.sign(
-        { id: user.id, email: user.email },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
-  
-      return res.status(200).json({
-        success: {
-          status: 200,
-          token: token,
-          user: {
-            id: user.id,
-            email: user.email,
-            phone_number: user.phone_number,
-            picture: 'https://via.placeholder.com/150'
-          }
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    return res.status(200).json({
+      success: {
+        status: 200,
+        token: token,
+        user: {
+          id: user.id,
+          email: user.email,
+          phone_number: user.phone_number,
+          picture: user.picture || 'https://via.placeholder.com/150'
         }
-      });
-    } catch (error) {
-      return res.status(500).json({ message: 'Error en el login' });
-    }
-  };
+      }
+    });
+  } catch (error) {
+    console.error('Error en el login:', error);
+    return res.status(500).json({ message: 'Error en el login' });
+  }
+};
