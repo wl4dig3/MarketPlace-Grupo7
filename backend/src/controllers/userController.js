@@ -75,3 +75,38 @@ export const loginUserController = async (req, res) => {
     return res.status(500).json({ message: 'Error en el login' });
   }
 };
+
+// Controlador para logout
+export const logoutUserController = (req, res) => {
+    const { refresh_token } = req.body;
+  
+    if (!refresh_token) {
+      return res.status(400).json({
+        errors: {
+          "400 Bad Request": "Invalid input"
+        }
+      });
+    }
+  
+    try {
+      jwt.verify(refresh_token, JWT_SECRET, (err) => {
+        if (err) {
+          return res.status(401).json({
+            errors: {
+              "401 Unauthorized": "Invalid token"
+            }
+          });
+        }
+  
+        return res.status(200).json({
+          success: {
+            status: 200,
+            message: 'Terminaste tu sesion'
+          }
+        });
+      });
+    } catch (error) {
+      console.error('Error en el logout:', error);
+      return res.status(500).json({ message: 'Error en el logout' });
+    }
+  };
