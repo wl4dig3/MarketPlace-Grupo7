@@ -1,63 +1,112 @@
-import { getUserById, createUser, deleteUserById } from '../model/userModel.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { createUser, getUserByEmail } from '../model/userModel.js';
 
-const createUserController = async (req, res) => {
+const JWT_SECRET = 'market-key'; 
+export const createUserController = async (req, res) => {
+  const { username, email, phone_number, date_of_birth, password } = req.body;
+
+  if (!username || !email || !phone_number || !date_of_birth || !password) {
+    return res.status(400).json({ message: 'Todos los campos son requeridos' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await createUser({
+      username,
+      email,
+      phone_number,
+      date_of_birth,
+      password: hashedPassword
+    });
+
+    return res.status(201).json({
+      id: result.data.id,
+      username: result.data.username,
+      email: result.data.email,
+      phone_number: result.data.phone_number
+    });
+  } catch (error) {
+    console.error('Error creando el usuario:', error);
+    return res.status(500).json({ message: 'Error creando el usuario' });
+  }
+};
+
+export const loginUserController = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Datos invalidos' });
+  }
+
+  try {
+    const result = await getUserByEmail(email);
+    if (!result) {
+      return res.status(401).json({ message: 'Credenciales invalidas' });
+    }
+
+    const user = result;
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Credenciales invalidas' });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    return res.status(200).json({
+      success: {
+        status: 200,
+        token: token,
+        user: {
+          id: user.id,
+          email: user.email,
+          phone_number: user.phone_number,
+          picture: user.picture || 'https://via.placeholder.com/150'
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error en el login:', error);
+    return res.status(500).json({ message: 'Error en el login' });
+  }
+};
+
+// Controlador para logout
+export const logoutUserController = (req, res) => {
+    const { refresh_token } = req.body;
+  
+    if (!refresh_token) {
+      return res.status(400).json({
+        errors: {
+          "400 Bad Request": "Invalid input"
+        }
+      });
+    }
+  
     try {
-        const user = req.body;
-        const newUser = await createUser(user);
-        res.status(201).json({
-            success: {
-                status: 201,
-                id: newUser.id,
-                username: newUser.username,
-                email: newUser.email,
-                phone_number: newUser.phone_number
+      jwt.verify(refresh_token, JWT_SECRET, (err) => {
+        if (err) {
+          return res.status(401).json({
+            errors: {
+              "401 Unauthorized": "Invalid token"
             }
+          });
+        }
+  
+        return res.status(200).json({
+          success: {
+            status: 200,
+            message: 'Terminaste tu sesion'
+          }
         });
+      });
     } catch (error) {
-        res.status(500).json({ error: 'Server error' });
+      console.error('Error en el logout:', error);
+      return res.status(500).json({ message: 'Error en el logout' });
     }
-};
-
-const getUserController = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = await getUserById(id);
-        if (user) {
-            res.status(200).json({
-                success: {
-                    status: 200,
-                    id: user.id,
-                    username: user.username,
-                    email: user.email,
-                    phone_number: user.phone_number,
-                    date_of_birth: user.date_of_birth
-                }
-            });
-        } else {
-            res.status(404).json({ error: 'User not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
-};
-
-const deleteUserController = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = await deleteUserById(id);
-        if (user) {
-            res.status(200).json({
-                success: {
-                    status: 200,
-                    message: 'User deleted successfully'
-                }
-            });
-        } else {
-            res.status(404).json({ error: 'User not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
-};
-
-export { createUserController, getUserController, deleteUserController };
+  };
