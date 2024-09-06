@@ -1,22 +1,21 @@
 import pool from '../config/db.js'; 
 
-const getUserById = async (id) => {
-    const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
-    return result.rows[0];
+export const createUser = async (userData) => {
+  const { username, email, phone_number, date_of_birth, password } = userData;
+
+  const query = `
+    INSERT INTO users (username, email, phone_number, date_of_birth, password)
+    VALUES ($1, $2, $3, TO_DATE($4, 'DD/MM/YYYY'), $5)
+    RETURNING id, username, email, phone_number;
+  `;
+
+  const values = [username, email, phone_number, date_of_birth, password];
+
+  try {
+    const result = await pool.query(query, values);
+    return { success: true, data: result.rows[0] };
+  } catch (error) {
+    return { success: false, message: 'Error creating user in the database' };
+  }
 };
 
-const createUser = async (user) => {
-    const { username, email, phone_number, date_of_birth, password } = user;
-    const result = await pool.query(
-        'INSERT INTO users (username, email, phone_number, date_of_birth, password) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [username, email, phone_number, date_of_birth, password]
-    );
-    return result.rows[0];
-};
-
-const deleteUserById = async (id) => {
-    const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
-    return result.rows[0];
-};
-
-export { getUserById, createUser, deleteUserById };
