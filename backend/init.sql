@@ -1,9 +1,4 @@
 CREATE DATABASE MARKETPLACE
-CREATE TABLE favorites (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER,
-    products_id INTEGER
-);
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
@@ -12,6 +7,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20)
 );
+
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     category VARCHAR(255),
@@ -19,5 +15,13 @@ CREATE TABLE products (
     description VARCHAR(255),
     image VARCHAR(255),
     price INTEGER,
-    user_id VARCHAR(255)
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+CREATE TABLE favorites (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    products_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (products_id) REFERENCES products(id) ON DELETE CASCADE
 );

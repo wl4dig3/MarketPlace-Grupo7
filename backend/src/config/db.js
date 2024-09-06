@@ -5,11 +5,11 @@ const { Pool } = pg;
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
 
 const config = {
-    host: DB_HOST,
-    port: DB_PORT,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_DATABASE,
+    host: 'localhost',
+    port: 5433,
+    user: 'postgres',
+    password: '26062024',
+    database: 'marketplace',
     allowExitOnIdle: true
 }
 const pool = new Pool(config);
