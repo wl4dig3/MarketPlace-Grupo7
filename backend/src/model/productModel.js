@@ -1,4 +1,4 @@
-import pool from "../config/db";
+import pool from "../config/db.js";
 
 const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
     const [campo, orden] = order_by.split("_");
@@ -40,15 +40,15 @@ const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
       };
 
       const createProduct = async (product) => {
-        const { name, description, price, category } = product;
+        const { category, name, description, image, price } = product;
       
         const query = `
-          INSERT INTO products (name, description, price, category)
+          INSERT INTO products (category, name, description, image, price)
           VALUES ($1, $2, $3, $4)
           RETURNING *
         `;
       
-        const values = [name, description, price, category];
+        const values = [category, name, description, image, price];
       
         try {
           const result = await pool.query(query, values);
@@ -60,7 +60,7 @@ const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
       };
 
       const updateProduct = async (product) => {
-        const { id, name, description, price, category } = product;
+        const { id, category, name, description, image, price} = product;
       
         const query = `
           UPDATE products
@@ -69,7 +69,7 @@ const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
           RETURNING *
         `;
       
-        const values = [name, description, price, category, id];
+        const values = [ id, category, name, description, image, price];
       
         try {
           const result = await pool.query(query, values);
