@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/product/:id', productController.getProductLimitController);
 router.get('/products', productController.getProductsController);
 router.get('/products/category/:category', productController.getProductsFilteredController);
-router.post('/products', productController.createProductController);
+router.post('/product', productController.createProductController);
 
 
 export default router;

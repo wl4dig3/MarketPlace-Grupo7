@@ -5,29 +5,20 @@ const homeController = async (req, res) => {
     res.send("Welcome to my API of products");
 };
 const createProductController = async (req, res) => {
-    const { name, price, description, image, category, id } = req.body;
-    if (!name || !price || !description || !image || !category, id) {
+    const { id, category, name, description, image, price  } = req.body;
+    if (id || !category || !name || !description ||  !image || !price ) {
         return res.status(400).json({ message: 'Todos los campos son requeridos' });
     }
     try {
         
         const result = await productModel.createProduct({
+            id,
+            category,
             name,
-            price,
             description,
             image,
-            category,
-            id
-        });
-        return res.status(201).json({
-            id: result.data.id,
-            name: result.data.name,
-            price: result.data.price,
-            description: result.data.description,
-            image: result.data.image,
-            category: result.data.category,
-            id: result.data.id
-        });
+            price});
+        return res.status(201).send("Se ha agregado un nuevo producto", result);
     } catch (error) {
         console.error('Error creando el producto:', error);
         return res.status(500).json({ message: 'Error creando el producto' });
