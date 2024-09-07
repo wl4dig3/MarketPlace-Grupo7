@@ -39,12 +39,12 @@ const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
         return products;
       };
 
-      const createProduct = async (product) => {
-        const { category, name, description, image, price } = product;
+      const createProduct = async (category, name, description, image, price) => {
+
       
         const query = `
           INSERT INTO products (category, name, description, image, price)
-          VALUES ($1, $2, $3, $4)
+          VALUES ($1, $2, $3, $4, $5)
           RETURNING *
         `;
       
@@ -52,7 +52,7 @@ const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
       
         try {
           const result = await pool.query(query, values);
-          if (result.rowCount > 0)  return { success: true, data: result.rows[0] };
+          if (result.rowCount > 0)  return result.rows[0];
         } catch (error) {
           console.error('Error al crear el producto:', error);
           return { success: false, message: 'Error al crear el producto' };
