@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { createUser, getUserByEmail } from '../model/userModel.js';
 
-const JWT_SECRET = 'market-key'; 
 export const createUserController = async (req, res) => {
   const { username, email, phone_number, date_of_birth, password } = req.body;
 
@@ -54,7 +53,7 @@ export const loginUserController = async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, email: user.email },
-      JWT_SECRET,
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
@@ -89,7 +88,7 @@ export const logoutUserController = (req, res) => {
     }
   
     try {
-      jwt.verify(refresh_token, JWT_SECRET, (err) => {
+      jwt.verify(refresh_token, process.env.JWT_SECRET, (err) => {
         if (err) {
           return res.status(401).json({
             errors: {
