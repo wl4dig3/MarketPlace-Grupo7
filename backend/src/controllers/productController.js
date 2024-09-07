@@ -5,14 +5,13 @@ const homeController = async (req, res) => {
     res.send("Welcome to my API of products");
 };
 const createProductController = async (req, res) => {
-    const { id, category, name, description, image, price  } = req.body;
-    if (id || !category || !name || !description ||  !image || !price ) {
+    const { category, name, description, image, price  } = req.body;
+    if (!category || !name || !description ||  !image || !price ) {
         return res.status(400).json({ message: 'Todos los campos son requeridos' });
     }
     try {
         
         const result = await productModel.createProduct({
-            id,
             category,
             name,
             description,
