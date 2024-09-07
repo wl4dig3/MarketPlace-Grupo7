@@ -70,7 +70,17 @@ const getProductsFilteredController = async (req, res) => {
     } catch (error) {
         console.log('falló la consulta de filtro',error.message);
     }
-}
+};
+const deleteProductController = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await productModel.deleteProduct(id);
+        if (result.rowCount > 0)  return res.status(200).json({ success: true, message: 'Se ha eliminado el proyecto' });
+    } catch (error) {
+        console.error('Error al crear el proyecto:', error);
+        return res.status(500).json({ success: false, message: 'Error al crear el proyecto' });
+    }
+};
 
 export const productController = {
     homeController,
@@ -78,4 +88,5 @@ export const productController = {
     getProductLimitController,
     getProductsController,
     getProductsFilteredController,
+    deleteProductController,
 };

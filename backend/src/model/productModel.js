@@ -1,15 +1,17 @@
 import pool from "../config/db.js";
+import format from "pg-format";
 
 const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
     const [campo, orden] = order_by.split("_");
     const offset = Math.abs((page - 1) * limit);
 
-    const query = `SELECT * FROM products ORDER BY ${campo} ${orden} LIMIT ${limit} OFFSET ${offset}`;
-    
+    const query = format("SELECT * FROM products order by %s %s LIMIT %s OFFSET %s", campo, orden, limit, offset);
+
+
         const result = await pool.query(query);
         result.rowCount >= 0 ? console.log(`Se encontraron ${result.rowCount} productos`) : console.log(`No se encontraron productos 😭`);
         console.log('query:::',result);
-        console.error('Error al obtener el usuario 😳:', error);
+        console.error('Error al obtener el producto 😳:');
         return result.rows[0];
     };
 
@@ -91,11 +93,10 @@ const getProductLimit = async ({limit = 5, order_by = "id_asc", page = 1 }) => {
       
         try {
           const result = await pool.query(query, values);
-          if (result.rowCount > 0)  return { success: true, data: result.rows[0] };
-        } catch (error) {
-          console.error('Error al crear el proyecto:', error);
-          return { success: false, message: 'Error al crear el proyecto' };
-        }
+          return result.rows;
+        } catch (error) { console.log('error en archivo query.js', error.message);
+            
+        } 
       };
     
 
