@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import Perfil from './views/Perfil';
 import { ProductsProvider } from './context/ProductsContext';
 import Productos from './views/Productos';
+import CrearPublicacion from './views/CrearPublicacion'
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<LandingPage/>} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/productos" element={<Productos />} />
+        <Route path="/crear-publicacion" element={<CrearPublicacion />} /> 
       </Routes>
       </ProductsProvider> 
     </AuthProvider>
@@ -22,5 +24,3 @@ const App = () => {
 };
 
 export default App;
-
-
