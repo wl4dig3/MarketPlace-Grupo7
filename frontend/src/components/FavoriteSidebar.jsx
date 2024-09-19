@@ -20,4 +20,3 @@ const FavoriteSidebar = ({ isOpen, onClose, favorites, onToggleFavorite }) => {
 };
 
 export default FavoriteSidebar;
-
