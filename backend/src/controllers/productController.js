@@ -1,0 +1,162 @@
+import {
+  createNewProduct,
+  getAllProducts,
+  getProductById,
+  getProductsByCategory,
+  updateExistingProduct,
+  deleteExistingProduct,
+} from '../model/productModel.js';
+
+// Crear un nuevo producto
+export const createProductController = async (req, res) => {
+  const { category_id, name, description, image, price, user_id } = req.body;
+
+  try {
+    const result = await createNewProduct({ category_id, name, description, image, price, user_id });
+    return res.status(201).json({
+      message: 'Producto creado exitosamente',
+      product: result.data,
+      links: {
+        all_products: { href: '/api/products', method: 'GET' },
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error creando el producto',
+      error: error.message,
+      links: {
+        all_products: { href: '/api/products', method: 'GET' },
+      },
+    });
+  }
+};
+
+// Obtener todos los productos
+export const getProductsController = async (req, res) => {
+  try {
+    const result = await getAllProducts();
+    return res.status(200).json({
+      products: result.data,
+      links: {
+        product_creation: { href: '/api/product', method: 'POST' },
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error obteniendo productos',
+      error: error.message,
+    });
+  }
+};
+
+// Obtener un producto por ID
+export const getProductByIdController = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await getProductById(id);
+    if (result) {
+      return res.status(200).json({
+        product: result.data,
+        links: {
+          all_products: { href: '/api/products', method: 'GET' },
+        },
+      });
+    } else {
+      return res.status(404).json({
+        message: 'Producto no encontrado',
+        links: {
+          all_products: { href: '/api/products', method: 'GET' },
+        },
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error obteniendo el producto',
+      error: error.message,
+    });
+  }
+};
+
+// Obtener productos filtrados por categoría
+export const getProductsFilteredController = async (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const result = await getProductsByCategory(category);
+    if (result.success) {
+      return res.status(200).json({
+        products: result.data,
+        links: {
+          all_products: { href: '/api/products', method: 'GET' },
+        },
+      });
+    } else {
+      return res.status(404).json({
+        message: 'No se encontraron productos para esta categoría',
+        links: {
+          all_products: { href: '/api/products', method: 'GET' },
+        },
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error obteniendo productos por categoría',
+      error: error.message,
+    });
+  }
+};
+
+// Actualizar un producto
+export const updateProductController = async (req, res) => {
+  const { id } = req.params;
+  const productData = req.body;
+
+  try {
+    const result = await updateExistingProduct(id, productData);
+    return res.status(200).json({
+      message: 'Producto actualizado exitosamente',
+      product: result.data,
+      links: {
+        all_products: { href: '/api/products', method: 'GET' },
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error actualizando el producto',
+      error: error.message,
+      links: {
+        all_products: { href: '/api/products', method: 'GET' },
+      },
+    });
+  }
+};
+
+// Eliminar un producto
+export const deleteProductController = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const success = await deleteExistingProduct(id);
+    if (success) {
+      return res.status(200).json({
+        message: 'Producto eliminado correctamente',
+        links: {
+          all_products: { href: '/api/products', method: 'GET' },
+        },
+      });
+    } else {
+      return res.status(404).json({
+        message: 'Producto no encontrado',
+        links: {
+          all_products: { href: '/api/products', method: 'GET' },
+        },
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Error eliminando el producto',
+      error: error.message,
+    });
+  }
+};
