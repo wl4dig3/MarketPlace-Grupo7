@@ -48,9 +48,10 @@ const CrearPublicacion = () => {
   
     try {
       await createProduct(newProduct, user.token);
-      navigate('/productos');
     } catch (error) {
       setError('Error al crear el producto');
+    } finally {
+      navigate('/productos');
     }
   };
   
