@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductItem from './ProductItem';
-import SideBar from './SideBar';
+import SideBar from './SideBarRight';
 
 const FavoriteSidebar = ({ isOpen, onClose, favorites, onToggleFavorite }) => {
   return (

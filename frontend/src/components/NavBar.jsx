@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
-import SideBar from './SideBar'; 
+import SideBar from './SideBarRight'; 
 
 const NavBar = ({ onFavoriteClick }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);

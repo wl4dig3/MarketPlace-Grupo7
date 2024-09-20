@@ -1,12 +1,11 @@
 import React from "react";
-import ProductItem from './ProductItem';
 
 const SideBar = ({ isOpen, onClose, children }) => {
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[2px] z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[2px] "
           onClick={onClose}
         ></div>
       )}

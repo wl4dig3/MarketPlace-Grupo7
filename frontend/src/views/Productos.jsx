@@ -27,12 +27,24 @@ const Productos = () => {
     setFavorites(storedFavorites);
   }, [fetchProducts]);
 
+    // Función para manejar el clic en un producto
+    const handleProductClick = (product) => {
+      setSelectedProduct(product);
+      setIsDetailSidebarOpen(true);
+    };
+  
+    // Función para cerrar el sidebar de detalles del producto
+    const handleDetailSidebarClose = () => {
+      setIsDetailSidebarOpen(false);
+      setSelectedProduct(null);
+    };
+
   if (error) {
     return <p className="text-red-500">Error: {error}</p>;
   }
 
   return (
-    <div className="container mx-auto px-4 bg-customColor">
+    <div className="container mx-auto px-4 bg-customColor -z-10">
       <NavBar onFavoriteClick={() => setIsSidebarOpen(true)} />
       <FavoriteSidebar
         isOpen={isSidebarOpen}
@@ -41,7 +53,7 @@ const Productos = () => {
       />
       <ProductDetailSidebar
         isOpen={isDetailSidebarOpen}
-        onClose={() => setIsDetailSidebarOpen(false)}
+        onClose={handleDetailSidebarClose}
         product={selectedProduct}
       />
       <h1 className="text-3xl font-bold my-8">Productos</h1>
