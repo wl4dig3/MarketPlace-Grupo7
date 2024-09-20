@@ -51,7 +51,7 @@ const CrearPublicacion = () => {
     } catch (error) {
       setError('Error al crear el producto');
     } finally {
-      navigate('/productos');
+      navigate('/perfil');
     }
   };
   

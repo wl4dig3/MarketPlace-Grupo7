@@ -45,9 +45,7 @@ const NavBar = ({ onFavoriteClick }) => {
                   alt="Perfil"
                   className="h-8 w-8 rounded-full"
                 />
-                <span className="ml-2 text-sm text-gray-700 font-poppins">
-                  Nombre Apellido
-                </span>
+                
               </div>
             </Link>
           </div>
@@ -59,7 +57,7 @@ const NavBar = ({ onFavoriteClick }) => {
         </div>
       </div>
       <SideBar isOpen={isSideBarOpen} onClose={toggleSideBar}>
-        {/* Aquí puedes añadir el contenido del carrito */}
+       
         <p>Contenido del carrito</p>
       </SideBar>
     </div>

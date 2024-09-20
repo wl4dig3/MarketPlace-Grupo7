@@ -11,15 +11,15 @@ const Perfil = () => {
   return (
     <div className="flex flex-col justify-around">
       <NavBar />
-      {/* Contenido principal */}
+     
       <main className="container mx-auto p-4 mt-4">
         <div className="flex flex-row">
-          <section className="bg-white p-4 mb-4 w-full md:w-1/2">
-            {/* Contenido de la sección 1 */}
+          <section className="bg-white p-5 mb-4 w-full md:w-1/2">
+           
             <img src="/Perfil.png" alt="Logo grupo 7" className="h-200 w-200" />
           </section>
           <section className="bg-white p-4 w-full md:w-1/2">
-            {/* Contenido del formulario */}
+            
             <form>
               <div className="mb-4 flex flex-row">
                 <FontAwesomeIcon icon={faUser} className="mt-3 mr-2" />
@@ -49,7 +49,7 @@ const Perfil = () => {
                 />
               </div>
             </form>
-            {/* Botón para crear producto */}
+            
             <div className="mt-4">
               <Link to="/crear-publicacion">
                 <button className="bg-blue-500 text-white px-4 py-2 rounded">Crear Producto</button>
@@ -57,11 +57,11 @@ const Perfil = () => {
             </div>
           </section>
         </div>
-        <section className="p-4 mb-5">
+        <section className="p-4 pt-10 mb-5">
           <h2 className="mb-5 text-2xl">Mis Publicaciones</h2>
           <article className="flex flex-wrap justify-start gap-4">
             <MisPublicaciones />
-            <MisPublicaciones />
+            
           </article>
         </section>
       </main>
