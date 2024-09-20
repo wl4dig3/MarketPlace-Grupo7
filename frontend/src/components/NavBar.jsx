@@ -30,6 +30,9 @@ const NavBar = ({ onFavoriteClick }) => {
             <Link to={"/perfil"}>
               <p className="text-lg font-poppins mb-2">Mis publicaciones</p>
             </Link>
+            <Link to={"/productos"}>
+              <p className="text-lg font-poppins mb-2">Productos</p>
+            </Link>
             <p className="text-lg font-poppins mb-2 cursor-pointer" onClick={onFavoriteClick}>Favorito</p>
           </div>
         </div>
