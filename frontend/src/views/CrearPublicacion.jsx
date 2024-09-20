@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { ProductsContext } from '../context/ProductsContext';
+import NavBar from '../components/NavBar';
 
 const CrearPublicacion = () => {
   const { user } = useAuth();
@@ -54,16 +55,20 @@ const CrearPublicacion = () => {
   };
   
   return (
-    <div>
-      <h1>Crear Producto</h1>
-      {error && <p>{error}</p>}
+    <>
+    <NavBar onFavoriteClick={() => setIsSidebarOpen(true)} />
+    <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+      
+      <h1 className="text-2xl font-bold mb-6">Crear Producto</h1>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Categoría:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700">Categoría:</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
+            className="w-full mt-2 p-2 border border-gray-300 rounded-md"
           >
             <option value="">Selecciona una categoría</option>
             {categories.map((cat) => (
@@ -73,44 +78,54 @@ const CrearPublicacion = () => {
             ))}
           </select>
         </div>
-        <div>
-          <label>Nombre:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700">Nombre:</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            className="w-full mt-2 p-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label>Descripción:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700">Descripción:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            className="w-full mt-2 p-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label>Imagen:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700">Imagen:</label>
           <input
             type="text"
             value={image}
             onChange={(e) => setImage(e.target.value)}
             required
+            className="w-full mt-2 p-2 border border-gray-300 rounded-md"
           />
         </div>
-        <div>
-          <label>Precio:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700">Precio:</label>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            className="w-full mt-2 p-2 border border-gray-300 rounded-md"
           />
         </div>
-        <button type="submit">Crear Producto</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Crear Producto
+        </button>
       </form>
     </div>
+  </>
   );
 };
 
