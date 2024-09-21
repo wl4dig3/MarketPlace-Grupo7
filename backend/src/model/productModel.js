@@ -85,3 +85,19 @@ export const deleteExistingProduct = async (id) => {
     return false;
   }
 };
+
+export const addFavorite = async (userId, productId) => {
+  const query = 'INSERT INTO favoritos (user_id, product_id) VALUES (?, ?)';
+  await db.execute(query, [userId, productId]);
+};
+
+export const removeFavorite = async (userId, productId) => {
+  const query = 'DELETE FROM favoritos WHERE user_id = ? AND product_id = ?';
+  await db.execute(query, [userId, productId]);
+};
+
+export const getFavorites = async (userId) => {
+  const query = 'SELECT product_id FROM favoritos WHERE user_id = ?';
+  const [rows] = await db.execute(query, [userId]);
+  return rows.map(row => row.product_id);
+};

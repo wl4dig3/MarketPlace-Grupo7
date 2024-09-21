@@ -4,8 +4,37 @@ import {
   getProductById,
   getProductsByCategory,
   updateExistingProduct,
-  deleteExistingProduct,
+  deleteExistingProduct,addFavorite, removeFavorite
 } from '../model/productModel.js';
+
+export const addFavoriteController = async (req, res) => {
+  const { userId, productId } = req.body;
+  try {
+    await addFavorite(userId, productId);
+    res.status(200).json({ message: 'Producto agregado a favoritos' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al agregar a favoritos', error: error.message });
+  }
+};
+
+export const removeFavoriteController = async (req, res) => {
+  const { userId, productId } = req.body;
+  try {
+    await removeFavorite(userId, productId);
+    res.status(200).json({ message: 'Producto eliminado de favoritos' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar de favoritos', error: error.message });
+  }
+};
+export const getFavoritesController = async (req, res) => {
+  const { userId } = req.query;
+  try {
+    const favorites = await getFavorites(userId);
+    res.status(200).json(favorites);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener favoritos', error: error.message });
+  }
+};
 
 // Crear un nuevo producto
 export const createProductController = async (req, res) => {

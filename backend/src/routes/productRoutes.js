@@ -4,7 +4,10 @@ import { createProductController,
     getProductByIdController,
     getProductsFilteredController,
     updateProductController ,
-    deleteProductController
+    deleteProductController,
+    addFavoriteController,
+    removeFavoriteController,
+    getFavoritesController
 } from '../controllers/productController.js'; 
 import authenticateToken from '../middlewares/authenticateToken.js';
 
@@ -16,5 +19,10 @@ router.get('/products/category/:category', getProductsFilteredController);
 router.post('/product', authenticateToken, createProductController);
 router.put('/product/:id', authenticateToken, updateProductController);
 router.delete('/product/:id', authenticateToken, deleteProductController);
+// Endpoint para agregar un favorito
+router.post('/favorites', addFavoriteController);
 
+// Endpoint para eliminar un favorito
+router.delete('/favorites', removeFavoriteController);
+router.get('/favorites', getFavoritesController);
 export default router;
