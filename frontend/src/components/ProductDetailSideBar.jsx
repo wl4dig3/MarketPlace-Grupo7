@@ -21,7 +21,7 @@ const ProductDetailSideBar = ({ isOpen, onClose, product }) => {
           <div className="flex flex-row justify-between">
             <button
               type="submit"
-              className="w-1/2 rounded-full bg-red-600 p-3 text-white transition hover:bg-opacity-90"
+              className="w-1/2 rounded-full bg-red-600 p-3 mr-2 text-white transition hover:bg-opacity-90"
             >
               Agregar al Carrito
             </button>

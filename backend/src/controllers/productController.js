@@ -4,7 +4,7 @@ import {
   getProductById,
   getProductsByCategory,
   updateExistingProduct,
-  deleteExistingProduct,addFavorite, removeFavorite
+  deleteExistingProduct, addFavorite, removeFavorite, getFavorites
 } from '../model/productModel.js';
 
 export const addFavoriteController = async (req, res) => {
@@ -13,7 +13,7 @@ export const addFavoriteController = async (req, res) => {
     await addFavorite(userId, productId);
     res.status(200).json({ message: 'Producto agregado a favoritos' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al agregar a favoritos', error: error.message });
+    res.status(500).json({ message: 'Controller Error al agregar a favoritos', error: error.message });
   }
 };
 
@@ -32,7 +32,7 @@ export const getFavoritesController = async (req, res) => {
     const favorites = await getFavorites(userId);
     res.status(200).json(favorites);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener favoritos', error: error.message });
+    res.status(500).json({ message: 'Error al obtener favoritos en controller', error: error.message });
   }
 };
 

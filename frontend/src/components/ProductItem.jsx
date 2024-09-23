@@ -1,43 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useFavorites } from '../context/FavoritesContext'; 
 
-const ProductItem = ({ product, onToggleFavorite, onClick, userId }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const ProductItem = ({ product, onClick }) => {
+  const { favorites, toggleFavorite } = useFavorites();
+  // console.log('[TOGGLE]', toggleFavorite);
+  const isFavorite = Array.isArray(favorites) && favorites.includes(product.id);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/favorites?userId=${userId}`);
-        const favorites = await response.json();
-        setIsFavorite(favorites.includes(product.id));
-      } catch (error) {
-        console.error('Error al obtener favoritos:', error);
-      }
-    };
-
-    fetchFavorites();
-  }, [product.id, userId]);
-
-  const handleFavoriteClick = async () => {
-    try {
-      if (isFavorite) {
-        await fetch(`${import.meta.env.VITE_API_URL}/favorites`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, productId: product.id }),
-        });
-      } else {
-        await fetch(`${import.meta.env.VITE_API_URL}/favorites`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, productId: product.id }),
-        });
-      }
-      setIsFavorite(!isFavorite);
-    } catch (error) {
-      console.error('Error al actualizar favorito:', error);
-    }
+  const handleFavoriteClick = (event) => {
+    event.stopPropagation(); // Para evitar que click en el corazón dispare el onClick del contenedor
+    console.log('object', product.id);
+    toggleFavorite(product.id);
   };
 
   return (
